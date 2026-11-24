@@ -1,38 +1,38 @@
 const questions = [
   {
-    q: "1. Which quality do you value most when facing danger?",
+    q: "“Which quality do you value most when stepping into the unknown?”",
     options: [
-      { text: "Bravery and daring", house: "Gryffindor" },
-      { text: "Wit and wisdom", house: "Ravenclaw" },
-      { text: "Loyalty and patience", house: "Hufflepuff" },
-      { text: "Ambition and resourcefulness", house: "Slytherin" }
+      { text: "Courage to stand up for others", house: "Gryffindor" },
+      { text: "Curiosity and a sharp mind", house: "Ravenclaw" },
+      { text: "Unwavering loyalty to friends", house: "Hufflepuff" },
+      { text: "Determination to achieve greatness", house: "Slytherin" }
     ]
   },
   {
-    q: "2. What would you most like to study at Hogwarts?",
+    q: "“Which subject inside the castle intrigues you the most?”",
     options: [
       { text: "Defense Against the Dark Arts", house: "Gryffindor" },
-      { text: "Ancient Runes & Charms", house: "Ravenclaw" },
-      { text: "Herbology & Magical Creatures", house: "Hufflepuff" },
-      { text: "Potions & Mind Arts", house: "Slytherin" }
+      { text: "Charms and Ancient Runes", house: "Ravenclaw" },
+      { text: "Herbology in the greenhouses", house: "Hufflepuff" },
+      { text: "Potions down in the dungeons", house: "Slytherin" }
     ]
   },
   {
-    q: "3. Which object in Diagon Alley catches your eye?",
+    q: "“A troll is loose in the dungeons. What is your instinct?”",
     options: [
-      { text: "A scarlet broomstick", house: "Gryffindor" },
-      { text: "A stack of rare spellbooks", house: "Ravenclaw" },
-      { text: "A friendly snowy owl", house: "Hufflepuff" },
-      { text: "A silver-plated cauldron", house: "Slytherin" }
+      { text: "Rush to make sure no one is trapped", house: "Gryffindor" },
+      { text: "Outsmart it using the environment", house: "Ravenclaw" },
+      { text: "Alert the prefects and guard the group", house: "Hufflepuff" },
+      { text: "Slip away quietly and find an advantage", house: "Slytherin" }
     ]
   }
 ];
 
-const houseColors = {
-  Gryffindor: "#740001",
-  Slytherin: "#1a472a",
-  Ravenclaw: "#0e1a40",
-  Hufflepuff: "#ecb939"
+const houseThemes = {
+  Gryffindor: { seal: "G", color: "#740001" },
+  Slytherin: { seal: "S", color: "#1a472a" },
+  Ravenclaw: { seal: "R", color: "#0e1a40" },
+  Hufflepuff: { seal: "H", color: "#8f6b14" }
 };
 
 let currentQuestion = 0;
@@ -43,6 +43,7 @@ const questionEl = document.getElementById("quiz-question");
 const optionsEl = document.getElementById("quiz-options");
 const resultEl = document.getElementById("sorting-result");
 const badgeEl = document.getElementById("house-badge");
+const sealEl = document.getElementById("house-seal");
 
 startBtn.addEventListener("click", () => {
   currentQuestion = 0;
@@ -59,7 +60,7 @@ function showQuestion() {
 
   item.options.forEach((opt) => {
     const btn = document.createElement("button");
-    btn.className = "magic-btn";
+    btn.className = "ink-btn";
     btn.textContent = opt.text;
     btn.onclick = () => selectAnswer(opt.house);
     optionsEl.appendChild(btn);
@@ -79,21 +80,23 @@ function selectAnswer(house) {
 
 function finishSorting() {
   optionsEl.innerHTML = "";
-  questionEl.textContent = "Hmm, difficult. Very difficult... Better be:";
+  questionEl.textContent = "“Ah, right then... hmm... right. Okay... better be:”";
 
   const sortedHouse = Object.keys(scores).reduce((a, b) =>
     scores[a] >= scores[b] ? a : b
   );
 
-  resultEl.innerHTML = `<h3>✨ ${sortedHouse.toUpperCase()}! ✨</h3>`;
+  resultEl.textContent = `— ${sortedHouse.toUpperCase()} —`;
   resultEl.classList.remove("hidden");
-  badgeEl.textContent = `House: ${sortedHouse}`;
-  badgeEl.style.backgroundColor = houseColors[sortedHouse];
-  startBtn.textContent = "Sort Again";
+
+  badgeEl.textContent = `Sorted into ${sortedHouse}`;
+  sealEl.textContent = houseThemes[sortedHouse].seal;
+  sealEl.style.background = houseThemes[sortedHouse].color;
+
+  startBtn.textContent = "Try the Hat Again";
   startBtn.classList.remove("hidden");
 }
 
-// Spell casting mechanics
 function castSpell(spellName) {
   const cleanSpell = spellName.trim().toLowerCase();
   const feedback = document.getElementById("spell-feedback");
@@ -102,19 +105,19 @@ function castSpell(spellName) {
 
   if (cleanSpell === "lumos") {
     document.body.classList.add("lumos-active");
-    feedback.textContent = "💡 Lumos! Bright light erupts from the tip of your wand.";
+    feedback.textContent = "A warm, silvery light blooms from the tip of your wand.";
   } else if (cleanSpell === "nox") {
     document.body.classList.remove("lumos-active");
-    feedback.textContent = "🌑 Nox! The light extinguishes back into darkness.";
+    feedback.textContent = "The glow fades, leaving the room bathed in candlelight once more.";
   } else if (cleanSpell === "wingardium leviosa" || cleanSpell === "leviosa") {
     feather.classList.add("floating");
-    feedback.textContent = "🪶 Swish and flick! The feather gracefully floats into the air.";
-    setTimeout(() => feather.classList.remove("floating"), 2500);
+    feedback.textContent = "With a clean swish and flick, the feather rises effortlessly off the desk.";
+    setTimeout(() => feather.classList.remove("floating"), 2600);
   } else if (cleanSpell === "alohomora") {
-    chest.textContent = "🔓 Third-Floor Corridor Door (Unlocked — Fluffy awaits!)";
-    feedback.textContent = "🗝️ Alohomora! The lock clicks open.";
+    chest.textContent = "Heavy Oak Door [Unlocked]";
+    feedback.textContent = "A soft metallic click echoes through the corridor — the lock gives way.";
   } else {
-    feedback.textContent = "💨 Sparks fizzle from your wand. Try Lumos, Nox, Wingardium Leviosa, or Alohomora!";
+    feedback.textContent = "A few harmless red sparks fizzle from your wand. Try Lumos, Nox, Wingardium Leviosa, or Alohomora.";
   }
 }
 
@@ -124,23 +127,27 @@ function castTypedSpell() {
   input.value = "";
 }
 
-// Mirror of Erised Easter Egg
+document.getElementById("spell-input").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") castTypedSpell();
+});
+
 function revealDesire() {
-  const house = badgeEl.textContent.replace("House: ", "");
+  const badgeText = badgeEl.textContent;
   const mirrorText = document.getElementById("mirror-text");
-  if (house === "Unsorted") {
-    mirrorText.textContent = "You see yourself holding the Philosopher's Stone — and winning the House Cup!";
+  if (badgeText.includes("Sorted into")) {
+    const house = badgeText.replace("Sorted into ", "");
+    mirrorText.textContent = `“You see yourself standing in the Great Hall, lifting the House Cup for ${house}.”`;
   } else {
-    mirrorText.textContent = `You see yourself holding the House Cup in glory for ${house}!`;
+    mirrorText.textContent = "“You see yourself reaching into your pocket and feeling the weight of the Philosopher’s Stone.”";
   }
 }
 
 function hideDesire() {
   document.getElementById("mirror-text").textContent =
-    "Hover over the golden glass to gaze into the mirror...";
+    "Step closer and gaze into the golden-framed glass...";
 }
 
-// Secret Platform 9 3/4 Easter Egg
 document.getElementById("secret-brick").addEventListener("click", () => {
-  alert("🚂 All aboard the Hogwarts Express! Next stop: Hogsmeade Station.");
+  const brick = document.getElementById("secret-brick");
+  brick.textContent = "Platform 9¾ — The Hogwarts Express departs at 11 o'clock!";
 });

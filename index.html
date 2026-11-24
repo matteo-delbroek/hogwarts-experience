@@ -3,66 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hogwarts First-Year Experience | Philosopher's Stone</title>
+  <title>Hogwarts Acceptance & First Year | 1991</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="dark-mode">
-  <div id="lumos-overlay"></div>
+<body>
+  <div class="ambient-glow" id="ambient-glow"></div>
 
-  <header>
-    <h1>⚡ Hogwarts First-Year Experience</h1>
-    <p class="subtitle">Celebrating <em>Harry Potter and the Philosopher's Stone</em> (2001)</p>
-    <div id="house-badge" class="badge">House: Unsorted</div>
-  </header>
+  <div class="parchment-scroll">
+    <div class="crest-seal" id="house-seal">H</div>
 
-  <main>
-    <!-- Section 1: Sorting Hat Ceremony -->
-    <section class="card" id="sorting-section">
-      <h2>🎩 The Sorting Hat Ceremony</h2>
-      <p id="quiz-question">Press the button below to place the Sorting Hat upon your head...</p>
-      <div id="quiz-options" class="options-grid"></div>
-      <button id="start-quiz-btn" class="magic-btn">Put on the Sorting Hat</button>
-      <div id="sorting-result" class="hidden"></div>
+    <header class="letter-header">
+      <p class="small-caps">Hogwarts School of Witchcraft and Wizardry</p>
+      <h1>First-Year Induction</h1>
+      <p class="headmaster-note">Headmaster: Albus Dumbledore • Term of 1991</p>
+      <div class="status-ribbon" id="house-badge">Awaiting the Sorting Ceremony</div>
+    </header>
+
+    <hr class="ink-divider">
+
+    <!-- Step 1: The Sorting Hat -->
+    <section class="chapter" id="sorting-chapter">
+      <h2>I. The Great Hall & The Sorting Hat</h2>
+      <p class="story-text" id="quiz-question">
+        The Great Hall falls silent beneath a sky of floating candles. Professor McGonagall calls your name and places the patched, frayed Sorting Hat upon your head...
+      </p>
+      <div id="quiz-options" class="choice-list"></div>
+      <button id="start-quiz-btn" class="wax-btn">Place the Hat Upon Your Head</button>
+      <div id="sorting-result" class="house-proclamation hidden"></div>
     </section>
 
-    <!-- Section 2: Charms Class (Interactive Spells) -->
-    <section class="card" id="spells-section">
-      <h2>🪄 First-Year Charms Practice</h2>
-      <p>Cast a spell or type an incantation into your wand below:</p>
+    <hr class="ink-divider">
 
-      <div class="spell-buttons">
-        <button class="magic-btn" onclick="castSpell('lumos')">Lumos</button>
-        <button class="magic-btn" onclick="castSpell('nox')">Nox</button>
-        <button class="magic-btn" onclick="castSpell('leviosa')">Wingardium Leviosa</button>
-        <button class="magic-btn" onclick="castSpell('alohomora')">Alohomora</button>
+    <!-- Step 2: Charms Practical -->
+    <section class="chapter" id="charms-chapter">
+      <h2>II. Professor Flitwick’s Charms Practical</h2>
+      <p class="story-text">
+        Speak or tap an incantation with your holly-and-phoenix-feather wand to pass your first-year practical examination.
+      </p>
+
+      <div class="incantation-bar">
+        <button class="ink-btn" onclick="castSpell('lumos')">Lumos</button>
+        <button class="ink-btn" onclick="castSpell('nox')">Nox</button>
+        <button class="ink-btn" onclick="castSpell('leviosa')">Wingardium Leviosa</button>
+        <button class="ink-btn" onclick="castSpell('alohomora')">Alohomora</button>
       </div>
 
-      <div class="wand-input">
-        <input type="text" id="spell-input" placeholder="Type a spell (e.g. Lumos, Alohomora)...">
-        <button class="magic-btn" onclick="castTypedSpell()">Cast</button>
+      <div class="wand-cast-row">
+        <input type="text" id="spell-input" placeholder="Whisper a spell (e.g. Lumos, Alohomora)..." autocomplete="off">
+        <button class="wax-btn" onclick="castTypedSpell()">Swish & Flick</button>
       </div>
 
-      <div class="stage">
-        <div id="feather">🪶</div>
-        <div id="locked-chest">🔒 Third-Floor Corridor Door (Locked)</div>
-        <p id="spell-feedback">Your wand awaits your command...</p>
-      </div>
-    </section>
-
-    <!-- Section 3: The Mirror of Erised (Easter Egg) -->
-    <section class="card" id="mirror-section">
-      <h2>🪞 The Mirror of Erised</h2>
-      <p class="inscription"><em>"Erised stra ehru oyt ube cafru oyt on wohsi."</em></p>
-      <div id="mirror-frame" onmouseenter="revealDesire()" onmouseleave="hideDesire()">
-        <p id="mirror-text">Hover over the golden glass to gaze into the mirror...</p>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <p>Built for Hack Club Tickets • <span id="secret-brick" title="Tap the bricks...">Platform 9¾</span></p>
-  </footer>
-
-  <script src="script.js"></script>
-</body>
-</html>
+      <div class="examination-desk">
+        <div class="desk-prop">
+          <span class="prop-label">White Feather</span>
+          <div id="feather" class="feather-prop">~
