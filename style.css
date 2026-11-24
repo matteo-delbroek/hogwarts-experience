@@ -1,12 +1,11 @@
 :root {
-  --night-bg: #0b0c10;
-  --parchment: #f3e7cf;
-  --parchment-edge: #dcc69e;
-  --ink: #241911;
-  --ink-muted: #5c4632;
-  --wax-red: #6e1414;
-  --wax-hover: #8c1b1b;
-  --gold: #b88a2e;
+  --bg-obsidian: #090b10;
+  --bg-slate: #121622;
+  --gold: #d4af37;
+  --gold-soft: rgba(212, 175, 55, 0.35);
+  --parchment-light: #f2e8d5;
+  --text-muted: #9fa6b8;
+  --house-accent: #740001;
 }
 
 * {
@@ -16,292 +15,574 @@
 }
 
 body {
-  font-family: "Crimson Text", Georgia, serif;
-  background-color: var(--night-bg);
-  background-image: radial-gradient(circle at 50% 15%, #1d1b26 0%, #090a0d 85%);
-  color: var(--ink);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  background: radial-gradient(circle at 50% 0%, #1a2033 0%, var(--bg-obsidian) 75%);
+  color: var(--parchment-light);
   min-height: 100vh;
-  padding: 40px 16px;
-  transition: background 0.8s ease;
-  position: relative;
   overflow-x: hidden;
+  transition: background 0.8s ease;
 }
 
-/* Lumos lighting effect across the entire room */
-body.lumos-active {
-  background-image: radial-gradient(circle at 50% 20%, #fff7d6 0%, #d6be8a 55%, #4a3c28 100%);
+body.lumos-lit {
+  background: radial-gradient(circle at 50% 10%, #4b4737 0%, #1a1814 75%);
 }
 
-.ambient-glow {
+#wand-canvas {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.85);
-  transition: box-shadow 0.8s ease;
-  z-index: 10;
-}
-
-body.lumos-active .ambient-glow {
-  box-shadow: inset 0 0 90px rgba(255, 236, 160, 0.5);
-}
-
-/* Single unified parchment sheet */
-.parchment-scroll {
-  max-width: 720px;
-  margin: 0 auto;
-  background: radial-gradient(ellipse at center, var(--parchment) 55%, var(--parchment-edge) 100%);
-  color: var(--ink);
-  padding: 48px 44px;
-  border-radius: 4px;
-  box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.75),
-    inset 0 0 40px rgba(139, 101, 52, 0.35);
-  border: 1px solid #b59867;
-  position: relative;
-}
-
-.crest-seal {
-  width: 54px;
-  height: 54px;
-  margin: 0 auto 16px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #962222, var(--wax-red));
-  color: #f3d999;
-  font-family: "Cinzel", serif;
-  font-weight: 700;
-  font-size: 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4), inset 0 0 6px rgba(0, 0, 0, 0.5);
-  border: 2px solid #4a0b0b;
-  transition: background 0.5s ease;
-}
-
-.letter-header {
-  text-align: center;
-}
-
-.small-caps {
-  font-family: "Cinzel", serif;
-  font-size: 0.85rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-}
-
-.letter-header h1 {
-  font-family: "Cinzel", serif;
-  font-size: 2.1rem;
-  margin: 6px 0;
-  color: var(--ink);
-}
-
-.headmaster-note {
-  font-style: italic;
-  color: var(--ink-muted);
-  font-size: 1.05rem;
-}
-
-.status-ribbon {
-  display: inline-block;
-  margin-top: 14px;
-  padding: 4px 18px;
-  border-top: 1px solid var(--gold);
-  border-bottom: 1px solid var(--gold);
-  font-family: "Cinzel", serif;
-  font-size: 0.9rem;
-  letter-spacing: 1px;
-  color: var(--ink);
-}
-
-.ink-divider {
-  border: none;
-  height: 1px;
-  background: linear-gradient(to right, transparent, rgba(92, 70, 50, 0.5), transparent);
-  margin: 32px 0;
-}
-
-.chapter h2 {
-  font-family: "Cinzel", serif;
-  font-size: 1.25rem;
-  margin-bottom: 10px;
-  color: var(--ink);
-}
-
-.story-text {
-  font-size: 1.15rem;
-  line-height: 1.65;
-  margin-bottom: 16px;
-}
-
-.choice-list {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-bottom: 16px;
-}
-
-.wax-btn {
-  background: var(--wax-red);
-  color: #f8eed8;
-  border: 1px solid #450909;
-  padding: 10px 20px;
-  font-family: "Cinzel", serif;
-  font-size: 0.9rem;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  border-radius: 3px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
-  transition: background 0.2s ease, transform 0.15s ease;
-}
-
-.wax-btn:hover {
-  background: var(--wax-hover);
-  transform: translateY(-1px);
-}
-
-.ink-btn {
-  background: transparent;
-  color: var(--ink);
-  border: 1px solid rgba(36, 25, 17, 0.45);
-  padding: 8px 14px;
-  font-family: "Cinzel", serif;
-  font-size: 0.85rem;
-  cursor: pointer;
-  border-radius: 3px;
-  transition: all 0.2s ease;
-}
-
-.ink-btn:hover {
-  background: rgba(36, 25, 17, 0.08);
-  border-color: var(--ink);
-}
-
-.house-proclamation {
-  margin-top: 14px;
-  padding: 12px;
-  text-align: center;
-  border: 1px solid var(--gold);
-  background: rgba(184, 138, 46, 0.12);
-  font-family: "Cinzel", serif;
-  font-size: 1.2rem;
-}
-
-.incantation-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 14px;
-}
-
-.wand-cast-row {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.wand-cast-row input {
-  flex: 1;
-  background: rgba(255, 255, 255, 0.45);
-  border: none;
-  border-bottom: 1px solid var(--ink);
-  padding: 8px 10px;
-  font-family: "Crimson Text", serif;
-  font-size: 1.1rem;
-  color: var(--ink);
-  outline: none;
-}
-
-.examination-desk {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  padding: 18px;
-  border: 1px solid rgba(92, 70, 50, 0.35);
-  background: rgba(139, 101, 52, 0.08);
-  text-align: center;
-}
-
-.prop-label {
-  display: block;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--ink-muted);
-  margin-bottom: 8px;
-}
-
-.feather-prop {
-  font-size: 1.4rem;
-  transition: transform 1.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.feather-prop.floating {
-  transform: translateY(-28px) rotate(-12deg);
-}
-
-.door-prop {
-  font-family: "Cinzel", serif;
-  font-size: 0.95rem;
-  padding: 4px 8px;
-}
-
-.wand-log {
-  margin-top: 12px;
-  font-style: italic;
-  color: var(--ink-muted);
-  text-align: center;
-  font-size: 1.1rem;
-}
-
-.mirror-riddle {
-  text-align: center;
-  font-style: italic;
-  letter-spacing: 1.5px;
-  color: var(--ink-muted);
-  margin-bottom: 12px;
-}
-
-.erised-glass {
-  padding: 28px 20px;
-  border: 2px solid var(--gold);
-  background: linear-gradient(135deg, rgba(184, 138, 46, 0.15), rgba(255, 255, 255, 0.25));
-  text-align: center;
-  font-style: italic;
-  font-size: 1.15rem;
-  cursor: pointer;
-  transition: background 0.4s ease;
-}
-
-.erised-glass:hover {
-  background: linear-gradient(135deg, rgba(184, 138, 46, 0.28), rgba(255, 250, 230, 0.45));
-}
-
-.scroll-footer {
-  margin-top: 36px;
-  text-align: center;
-  font-size: 0.95rem;
-  color: var(--ink-muted);
-}
-
-#secret-brick {
-  color: var(--wax-red);
-  font-weight: 600;
-  cursor: pointer;
-  border-bottom: 1px dotted var(--wax-red);
+  z-index: 999;
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
-@media (max-width: 600px) {
-  .parchment-scroll {
-    padding: 32px 20px;
-  }
-  .choice-list,
-  .examination-desk {
-    grid-template-columns: 1fr;
-  }
+/* INTRO SCREEN */
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at top, #171d2e 0%, #06070a 80%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 100;
+  padding: 20px;
+}
+
+.stars-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 15% 20%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 35% 12%, #fff, transparent),
+    radial-gradient(1px 1px at 65% 25%, #fff, transparent),
+    radial-gradient(2px 2px at 82% 18%, #f5e6b8, transparent),
+    radial-gradient(1px 1px at 25% 45%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 75% 40%, #fff, transparent);
+  opacity: 0.75;
+}
+
+.intro-content {
+  position: relative;
+  z-index: 2;
+  max-width: 680px;
+}
+
+.ww-emblem {
+  font-family: "Cinzel", serif;
+  font-size: 0.85rem;
+  letter-spacing: 4px;
+  color: var(--gold);
+  margin-bottom: 28px;
+}
+
+.intro-kicker {
+  font-family: "Cinzel", serif;
+  font-size: 0.9rem;
+  letter-spacing: 5px;
+  color: #cbd5e1;
+  margin-bottom: 8px;
+}
+
+.intro-title {
+  font-family: "Cinzel Decorative", serif;
+  font-size: clamp(2.6rem, 6vw, 4.6rem);
+  color: #ffffff;
+  text-shadow: 0 6px 30px rgba(0, 0, 0, 0.9);
+  margin-bottom: 14px;
+}
+
+.intro-sub {
+  font-size: 1.3rem;
+  color: #d1d5db;
+  margin-bottom: 30px;
+}
+
+.castle-silhouette {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 220px;
+  z-index: 1;
+}
+
+.royal-pill-btn {
+  background: linear-gradient(135deg, #5b4b8a, #3c3063);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 12px 30px;
+  border-radius: 999px;
+  font-family: "Cinzel", serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.royal-pill-btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #6e5ba6, #4b3d7a);
+  box-shadow: 0 8px 25px rgba(107, 91, 166, 0.45);
+}
+
+.ghost-btn {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--gold-soft);
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-family: "Cinzel", serif;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+/* POTTERMORE TOP NAVIGATION BAR */
+.app-shell {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.pottermore-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--gold-soft);
+  padding: 10px 0 18px;
+  margin-bottom: 24px;
+  gap: 12px;
+}
+
+.nav-wing {
+  display: flex;
+  gap: 14px;
+}
+
+.medallion {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.25s ease, transform 0.2s ease;
+}
+
+.medallion-ring {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.28);
+  background: radial-gradient(circle at 30% 30%, #23293d, #0d1018);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Cinzel", serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--parchment-light);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.12), 0 6px 14px rgba(0, 0, 0, 0.6);
+  transition: all 0.25s ease;
+}
+
+.medallion:hover .medallion-ring,
+.medallion.active .medallion-ring {
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: 0 0 16px rgba(212, 175, 55, 0.45);
+  transform: translateY(-2px);
+}
+
+.medallion.active .medallion-label {
+  color: var(--gold);
+}
+
+.medallion-label {
+  font-family: "Cinzel", serif;
+  font-size: 0.72rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.center-crest-box {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.brand-arc {
+  font-family: "Cinzel", serif;
+  font-size: 0.72rem;
+  letter-spacing: 3px;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.house-shield {
+  width: 64px;
+  height: 72px;
+  background: var(--house-accent);
+  border: 2px solid var(--gold);
+  border-radius: 6px 6px 34px 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Cinzel Decorative", serif;
+  font-size: 1.8rem;
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+  margin-bottom: 8px;
+  transition: background 0.5s ease;
+}
+
+.stats-strip {
+  font-family: "Cinzel", serif;
+  font-size: 0.78rem;
+  color: #e5e7eb;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--gold-soft);
+}
+
+.stat-divider {
+  margin: 0 8px;
+  color: var(--gold);
+}
+
+/* UNIFIED SCENE VIEWPORT */
+.scene-viewport {
+  background: radial-gradient(circle at center, rgba(28, 34, 52, 0.85) 0%, rgba(11, 14, 22, 0.95) 100%);
+  border: 1px solid var(--gold-soft);
+  border-radius: 10px;
+  min-height: 470px;
+  padding: 34px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75), inset 0 0 60px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.room-scene {
+  display: none;
+  animation: fadeScene 0.45s ease;
+}
+
+.room-scene.active-room {
+  display: block;
+}
+
+@keyframes fadeScene {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.scene-banner {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.chapter-tag {
+  font-family: "Cinzel", serif;
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  color: var(--gold);
+}
+
+.scene-banner h2 {
+  font-family: "Cinzel Decorative", serif;
+  font-size: 2rem;
+  color: #fff;
+  margin-top: 4px;
+}
+
+.scene-stage {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.narrative-line {
+  font-size: 1.35rem;
+  font-style: italic;
+  color: #f3ead8;
+  margin: 18px 0;
+  line-height: 1.6;
+}
+
+.ornate-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.choice-tile {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--gold-soft);
+  color: var(--parchment-light);
+  padding: 14px 16px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.choice-tile:hover {
+  background: rgba(212, 175, 55, 0.16);
+  border-color: var(--gold);
+}
+
+/* POTIONS BENCH */
+.potions-bench {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: center;
+}
+
+.shelf-column h3 {
+  font-family: "Cinzel", serif;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.hint-text {
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.ingredients-rack {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.ingredient-jar {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid var(--gold-soft);
+  color: var(--parchment-light);
+  padding: 12px 10px;
+  font-family: "Cinzel", serif;
+  font-size: 0.78rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.ingredient-jar:hover {
+  border-color: var(--gold);
+  background: rgba(212, 175, 55, 0.15);
+}
+
+.cauldron-column {
+  text-align: center;
+}
+
+.cauldron-vessel {
+  width: 190px;
+  margin: 0 auto 18px;
+  position: relative;
+}
+
+.cauldron-liquid {
+  height: 18px;
+  width: 150px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background: #1e293b;
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.2);
+  transition: background 0.5s ease, box-shadow 0.5s ease;
+}
+
+.cauldron-rim {
+  height: 14px;
+  width: 164px;
+  margin: -6px auto 0;
+  background: #1f242d;
+  border: 1px solid #4b5563;
+  border-radius: 999px;
+}
+
+.cauldron-body {
+  height: 115px;
+  width: 180px;
+  margin: -4px auto 0;
+  background: radial-gradient(circle at 35% 30%, #374151, #111827 80%);
+  border-radius: 18px 18px 80px 80px;
+  border: 1px solid #4b5563;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  font-family: "Cinzel", serif;
+  font-size: 0.75rem;
+  color: #cbd5e1;
+}
+
+.cauldron-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* CHARMS ROOM */
+.spell-deck {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.spell-rune {
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  padding: 8px 16px;
+  font-family: "Cinzel", serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.spell-rune:hover {
+  background: var(--gold);
+  color: #0b0d13;
+}
+
+.incantation-input-wrap {
+  display: flex;
+  gap: 10px;
+  max-width: 520px;
+  margin: 0 auto 22px;
+}
+
+.incantation-input-wrap input {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid var(--gold-soft);
+  padding: 10px 14px;
+  color: #fff;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.15rem;
+  border-radius: 4px;
+}
+
+.charms-altar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  padding: 20px;
+  border: 1px solid var(--gold-soft);
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.item-caption {
+  display: block;
+  font-family: "Cinzel", serif;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.floating-feather {
+  font-family: "Cinzel", serif;
+  letter-spacing: 3px;
+  transition: transform 1.4s ease;
+}
+
+.floating-feather.levitating {
+  transform: translateY(-28px) rotate(-10deg);
+  color: var(--gold);
+}
+
+.lock-state,
+.flame-state {
+  font-family: "Cinzel", serif;
+  font-weight: 700;
+}
+
+.flame-state.ignited {
+  color: #fb923c;
+  text-shadow: 0 0 14px #f97316;
+}
+
+/* MIRROR OF ERISED */
+.mirror-inscription {
+  font-family: "Cinzel", serif;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.golden-mirror-arch {
+  max-width: 460px;
+  margin: 0 auto 22px;
+  padding: 46px 26px;
+  border: 3px solid var(--gold);
+  border-radius: 220px 220px 10px 10px;
+  background: radial-gradient(circle, rgba(148, 163, 184, 0.22) 0%, rgba(15, 23, 42, 0.9) 85%);
+  box-shadow: 0 0 35px rgba(212, 175, 55, 0.2), inset 0 0 40px rgba(255, 255, 255, 0.08);
+}
+
+.mirror-vision {
+  font-size: 1.35rem;
+  font-style: italic;
+  color: #f8fafc;
+}
+
+/* DIAGON ALLEY & TRUNK */
+.shop-grid,
+.trunk-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.shop-card,
+.trunk-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--gold-soft);
+  padding: 16px;
+  border-radius: 6px;
+}
+
+.shop-card h4 {
+  font-family: "Cinzel", serif;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.shop-card p {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.platform-secret {
+  margin-top: 26px;
+  padding: 14px;
+  border: 1px dashed var(--gold);
+  font-family: "Cinzel", serif;
+  font-size: 0.85rem;
+  color: var(--gold);
+  cursor: pointer;
+}
+
+@media (max-width: 820px) {
+  .pottermore-nav { flex-direction: column; }
+  .potions-bench, .ornate-grid, .charms-altar { grid-template-columns: 1fr; }
 }

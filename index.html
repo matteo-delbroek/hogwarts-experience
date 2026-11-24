@@ -3,60 +3,218 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hogwarts Acceptance & First Year | 1991</title>
+  <title>Wizarding World | Hogwarts Year One</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="ambient-glow" id="ambient-glow"></div>
+  <!-- Wand cursor trail canvas -->
+  <canvas id="wand-canvas"></canvas>
 
-  <div class="parchment-scroll">
-    <div class="crest-seal" id="house-seal">H</div>
+  <!-- INTRO SCREEN (Wizarding World style) -->
+  <section id="intro-screen" class="intro-overlay">
+    <div class="stars-bg"></div>
+    <div class="intro-content">
+      <div class="ww-emblem">✦ WIZARDING WORLD ✦</div>
+      <p class="intro-kicker">WELCOME TO THE</p>
+      <h1 class="intro-title">Wizarding World</h1>
+      <p class="intro-sub">Step through the gates of Hogwarts and relive the magic of Year One</p>
+      <button id="enter-castle-btn" class="royal-pill-btn">ENTER HOGWARTS</button>
+    </div>
+    <!-- Castle silhouette -->
+    <svg class="castle-silhouette" viewBox="0 0 1200 260" preserveAspectRatio="none">
+      <path d="M0,260 L0,210 L90,210 L110,165 L125,210 L180,210 L195,120 L210,60 L225,120 L240,210 L310,210 L330,145 L345,95 L360,145 L380,210 L460,210 L480,110 L500,35 L520,110 L540,210 L620,210 L645,130 L665,75 L685,130 L710,210 L810,210 L835,150 L855,105 L875,150 L900,210 L1010,210 L1035,160 L1055,210 L1200,210 L1200,260 Z" fill="#07080c"/>
+    </svg>
+  </section>
 
-    <header class="letter-header">
-      <p class="small-caps">Hogwarts School of Witchcraft and Wizardry</p>
-      <h1>First-Year Induction</h1>
-      <p class="headmaster-note">Headmaster: Albus Dumbledore • Term of 1991</p>
-      <div class="status-ribbon" id="house-badge">Awaiting the Sorting Ceremony</div>
+  <!-- MAIN POTTERMORE-STYLE INTERFACE -->
+  <div id="app-shell" class="app-shell hidden">
+    <!-- Ornate Top Medallion Navigation Bar -->
+    <header class="pottermore-nav">
+      <div class="nav-wing left-wing">
+        <button class="medallion active" data-room="great-hall" title="The Great Hall">
+          <span class="medallion-ring">I</span>
+          <span class="medallion-label">Great Hall</span>
+        </button>
+        <button class="medallion" data-room="potions" title="Potions Dungeon">
+          <span class="medallion-ring">II</span>
+          <span class="medallion-label">Potions</span>
+        </button>
+        <button class="medallion" data-room="charms" title="Charms Class">
+          <span class="medallion-ring">III</span>
+          <span class="medallion-label">Charms</span>
+        </button>
+      </div>
+
+      <!-- Center Crest & Counters -->
+      <div class="center-crest-box">
+        <div class="brand-arc">POTTERMORE • 1991</div>
+        <div class="house-shield" id="crest-shield">
+          <span id="crest-initial">H</span>
+        </div>
+        <div class="stats-strip">
+          <span class="stat-pill"><strong id="galleons-count">50</strong> Galleons</span>
+          <span class="stat-divider">•</span>
+          <span class="stat-pill"><strong id="points-count">0</strong> House Points (<span id="house-name-label">Unsorted</span>)</span>
+        </div>
+      </div>
+
+      <div class="nav-wing right-wing">
+        <button class="medallion" data-room="mirror" title="Mirror of Erised">
+          <span class="medallion-ring">IV</span>
+          <span class="medallion-label">Erised</span>
+        </button>
+        <button class="medallion" data-room="diagon" title="Diagon Alley">
+          <span class="medallion-ring">V</span>
+          <span class="medallion-label">Diagon Alley</span>
+        </button>
+        <button class="medallion" data-room="trunk" title="School Trunk">
+          <span class="medallion-ring">VI</span>
+          <span class="medallion-label">My Trunk</span>
+        </button>
+      </div>
     </header>
 
-    <hr class="ink-divider">
+    <!-- ACTIVE SCENE VIEWPORT (1 unified screen, switches smoothly) -->
+    <main class="scene-viewport">
+      <!-- ROOM 1: THE GREAT HALL (SORTING) -->
+      <section id="room-great-hall" class="room-scene active-room">
+        <div class="scene-banner">
+          <span class="chapter-tag">CHAPTER I • THE GREAT HALL</span>
+          <h2>The Sorting Ceremony</h2>
+        </div>
+        <div class="scene-stage">
+          <p class="narrative-line" id="hat-dialogue">
+            “Hmm... difficult. Very difficult. Plenty of courage, I see. Not a bad mind either. Where shall I put you?”
+          </p>
+          <div id="quiz-choices" class="ornate-grid"></div>
+          <button id="begin-sorting-btn" class="royal-pill-btn">Place the Sorting Hat</button>
+        </div>
+      </section>
 
-    <!-- Step 1: The Sorting Hat -->
-    <section class="chapter" id="sorting-chapter">
-      <h2>I. The Great Hall & The Sorting Hat</h2>
-      <p class="story-text" id="quiz-question">
-        The Great Hall falls silent beneath a sky of floating candles. Professor McGonagall calls your name and places the patched, frayed Sorting Hat upon your head...
-      </p>
-      <div id="quiz-options" class="choice-list"></div>
-      <button id="start-quiz-btn" class="wax-btn">Place the Hat Upon Your Head</button>
-      <div id="sorting-result" class="house-proclamation hidden"></div>
-    </section>
+      <!-- ROOM 2: POTIONS DUNGEON (BREW A POTION) -->
+      <section id="room-potions" class="room-scene">
+        <div class="scene-banner">
+          <span class="chapter-tag">CHAPTER II • THE DUNGEONS</span>
+          <h2>Brew a Potion</h2>
+        </div>
+        <div class="potions-bench">
+          <div class="shelf-column">
+            <h3>Apothecary Shelf</h3>
+            <p class="hint-text">Click 3 ingredients to add them to your pewter cauldron:</p>
+            <div class="ingredients-rack">
+              <button class="ingredient-jar" onclick="addIngredient('Bezoar')">Bezoar Stone</button>
+              <button class="ingredient-jar" onclick="addIngredient('Unicorn Hair')">Unicorn Tail Hair</button>
+              <button class="ingredient-jar" onclick="addIngredient('Boomslang Skin')">Boomslang Skin</button>
+              <button class="ingredient-jar" onclick="addIngredient('Asphodel')">Powdered Asphodel</button>
+              <button class="ingredient-jar" onclick="addIngredient('Phoenix Tear')">Phoenix Tear</button>
+              <button class="ingredient-jar" onclick="addIngredient('Dragon Liver')">Dragon Liver</button>
+            </div>
+          </div>
 
-    <hr class="ink-divider">
+          <div class="cauldron-column">
+            <div class="cauldron-vessel" id="cauldron-vessel">
+              <div class="cauldron-liquid" id="cauldron-liquid"></div>
+              <div class="cauldron-rim"></div>
+              <div class="cauldron-body">
+                <span id="cauldron-slots">Empty Cauldron (0/3)</span>
+              </div>
+            </div>
+            <div class="cauldron-controls">
+              <button class="royal-pill-btn" onclick="brewCauldron()">Stir & Brew</button>
+              <button class="ghost-btn" onclick="clearCauldron()">Empty</button>
+            </div>
+            <p class="narrative-line" id="potion-result">Select three ingredients from the shelf...</p>
+          </div>
+        </div>
+      </section>
 
-    <!-- Step 2: Charms Practical -->
-    <section class="chapter" id="charms-chapter">
-      <h2>II. Professor Flitwick’s Charms Practical</h2>
-      <p class="story-text">
-        Speak or tap an incantation with your holly-and-phoenix-feather wand to pass your first-year practical examination.
-      </p>
+      <!-- ROOM 3: CHARMS CLASS -->
+      <section id="room-charms" class="room-scene">
+        <div class="scene-banner">
+          <span class="chapter-tag">CHAPTER III • CHARMS CLASSROOM</span>
+          <h2>Incantations & Wandwork</h2>
+        </div>
+        <div class="scene-stage">
+          <div class="spell-deck">
+            <button class="spell-rune" onclick="castSpell('lumos')">Lumos</button>
+            <button class="spell-rune" onclick="castSpell('nox')">Nox</button>
+            <button class="spell-rune" onclick="castSpell('leviosa')">Wingardium Leviosa</button>
+            <button class="spell-rune" onclick="castSpell('alohomora')">Alohomora</button>
+            <button class="spell-rune" onclick="castSpell('incendio')">Incendio</button>
+          </div>
 
-      <div class="incantation-bar">
-        <button class="ink-btn" onclick="castSpell('lumos')">Lumos</button>
-        <button class="ink-btn" onclick="castSpell('nox')">Nox</button>
-        <button class="ink-btn" onclick="castSpell('leviosa')">Wingardium Leviosa</button>
-        <button class="ink-btn" onclick="castSpell('alohomora')">Alohomora</button>
-      </div>
+          <div class="incantation-input-wrap">
+            <input type="text" id="spell-input" placeholder="Speak an incantation (e.g. Lumos, Incendio)..." autocomplete="off">
+            <button class="royal-pill-btn" onclick="castTypedSpell()">Cast</button>
+          </div>
 
-      <div class="wand-cast-row">
-        <input type="text" id="spell-input" placeholder="Whisper a spell (e.g. Lumos, Alohomora)..." autocomplete="off">
-        <button class="wax-btn" onclick="castTypedSpell()">Swish & Flick</button>
-      </div>
+          <div class="charms-altar">
+            <div class="altar-item">
+              <span class="item-caption">Specimen Feather</span>
+              <div id="feather-object" class="floating-feather">FEATHER</div>
+            </div>
+            <div class="altar-item">
+              <span class="item-caption">3rd Floor Corridor</span>
+              <div id="corridor-lock" class="lock-state">SEALED</div>
+            </div>
+            <div class="altar-item">
+              <span class="item-caption">Brass Brazier</span>
+              <div id="brazier-flame" class="flame-state">UNLIT</div>
+            </div>
+          </div>
+          <p class="narrative-line" id="spell-feedback">Move your wand across the screen and cast a charm.</p>
+        </div>
+      </section>
 
-      <div class="examination-desk">
-        <div class="desk-prop">
-          <span class="prop-label">White Feather</span>
-          <div id="feather" class="feather-prop">~
+      <!-- ROOM 4: MIRROR OF ERISED -->
+      <section id="room-mirror" class="room-scene">
+        <div class="scene-banner">
+          <span class="chapter-tag">CHAPTER IV • THE FORGOTTEN CLASSROOM</span>
+          <h2>The Mirror of Erised</h2>
+        </div>
+        <div class="scene-stage">
+          <p class="mirror-inscription">ERISED STRA EHRU OYT UBE CAFRU OYT ON WOHSI</p>
+          <div class="golden-mirror-arch" id="mirror-glass">
+            <div class="mirror-mist"></div>
+            <p class="mirror-vision" id="mirror-vision">
+              The surface ripples like silver water. Step forward to see your heart’s deepest desire...
+            </p>
+          </div>
+          <button class="royal-pill-btn" onclick="gazeIntoMirror()">Gaze Into the Mirror</button>
+        </div>
+      </section>
+
+      <!-- ROOM 5: DIAGON ALLEY -->
+      <section id="room-diagon" class="room-scene">
+        <div class="scene-banner">
+          <span class="chapter-tag">CHAPTER V • LONDON</span>
+          <h2>Diagon Alley Merchants</h2>
+        </div>
+        <div class="scene-stage">
+          <p class="narrative-line">Spend your Gringotts Galleons before boarding the Hogwarts Express at Platform 9¾.</p>
+          <div class="shop-grid" id="diagon-shop"></div>
+        </div>
+      </section>
+
+      <!-- ROOM 6: MY SCHOOL TRUNK -->
+      <section id="room-trunk" class="room-scene">
+        <div class="scene-banner">
+          <span class="chapter-tag">HOGWARTS EXPRESS • COMPARTMENT 4</span>
+          <h2>Your School Trunk & Achievements</h2>
+        </div>
+        <div class="scene-stage">
+          <div id="trunk-inventory" class="trunk-list"></div>
+          <div class="platform-secret" id="platform-brick" onclick="triggerPlatform()">
+            Tap the brick wall three up and two across (Platform 9¾)
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
